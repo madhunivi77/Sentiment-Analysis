@@ -21,3 +21,6 @@ pip install numpy pandas seaborn nltk matplotlib scikit-learn wordcloud
 - Evaluation: Evaluate the models' performance using metrics like accuracy, precision, recall, and F1 score.
 
 - Prediction: Use the trained models to predict the sentiment of new text samples.
+
+``` python
+python3 main.py ```
