@@ -19,11 +19,10 @@ This project implements a sentiment analysis model to classify tweets into posit
 ### Prerequisites
 Ensure you have the following installed:
 - Python 3.x
--```bash
+```bash
 pip install numpy pandas seaborn nltk matplotlib scikit-learn wordcloud
 ```
-
-# Usage
+## Usage
 Run the script to perform sentiment analysis 
 ```python
 python3 main.py ```
