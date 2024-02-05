@@ -8,7 +8,6 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import ssl
 import nltk
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
@@ -24,14 +23,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from wordcloud import WordCloud
 from string import punctuation
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.metrics import accuracy_score,confusion_matrix,classification_report
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.linear_model import LogisticRegression
+
 
 
 # 1. Data Exploration
@@ -219,7 +216,7 @@ def metrics(y_train,y_train_pred,y_test,y_test_pred):
     print(classification_report(y_test,y_test_pred))
     plt.show()
 
-
+from sklearn.naive_bayes import MultinomialNB
 # Multinomial NB 
 NB = MultinomialNB()
 NB.fit(X_train,y_train)
@@ -227,6 +224,7 @@ y_train_pred = NB.predict(X_train)
 y_test_pred = NB.predict(X_test)
 metrics(y_train,y_train_pred,y_test,y_test_pred)
 
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 # Linear Support Vector Machine
 svc = LinearSVC()
 svc.fit(X_train,y_train)
@@ -234,6 +232,7 @@ y_train_pred = svc.predict(X_train)
 y_test_pred = svc.predict(X_test)
 metrics(y_train,y_train_pred,y_test,y_test_pred)
 
+from sklearn.linear_model import LogisticRegression
 # Logistic Regression
 lr = LogisticRegression()
 lr.fit(X_train,y_train)
