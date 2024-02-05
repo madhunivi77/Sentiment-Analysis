@@ -240,16 +240,6 @@ y_train_pred = lr.predict(X_train)
 y_test_pred = lr.predict(X_test)
 metrics(y_train, y_train_pred, y_test, y_test_pred)
 
-# Data 
-data = {
-    'Model': ['Multinomial NB', 'linear SVC', 'Logistic'],
-    'Training Accuracy': [ 80, 92, 86],
-    'Testing Accuracy': [ 78, 83, 83]
-}
-
-df = pd.DataFrame(data)
-print(df)
-
 # Sample text testing of the model 
 def preprocess_text(text, stop_words, stemmer, lemmatizer):
     # Remove non-alphabetic characters
