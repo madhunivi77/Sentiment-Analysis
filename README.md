@@ -7,7 +7,8 @@ This project implements a sentiment analysis model to classify tweets into posit
 To run this project, install the required packages:
 
 ```bash
-pip install numpy pandas seaborn nltk matplotlib scikit-learn wordcloud```
+pip install numpy pandas seaborn nltk matplotlib scikit-learn wordcloud
+```
 # Usage
 - Data Exploration: Explore the dataset to understand the distribution of sentiments.
 
