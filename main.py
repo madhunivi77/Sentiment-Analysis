@@ -4,6 +4,7 @@
 # to build a predictive model capable of determining whether a given text conveys positive,
 # negative, or neutral sentiment.
 
+# importing necessary libraries 
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -60,10 +61,10 @@ df_majority_downsampled = pd.DataFrame(resample(df_majority,
                                                  replace=False,
                                                  n_samples=len(df_minority),
                                                  random_state=1234))
-
 df = pd.concat([df_majority_downsampled, df_minority], ignore_index=True)
 df.head()
 
+# Plot graph again after downsampling
 sns.set(style="whitegrid") 
 sns.countplot(data=df, x='Sentiment', hue='Sentiment', palette='Set2')
 plt.xlabel('Sentiment')
@@ -72,14 +73,17 @@ plt.title('Distribution of Sentiments')
 plt.show() 
 # Plot showcases that both classes have equal number of samples (248576)
 
+
 # 2. Data Preprocessing
 stuff_to_be_removed = list(stopwords.words('english'))+list(punctuation)
 stemmer = LancasterStemmer()
 
+# Convert the 'text' column of the dataframe into a list
 corpus = df['text'].tolist()
-# print(len(corpus))
+print(len(corpus))
 # print(corpus[0])
 
+# Initialize empty lists to store the final processed corpus
 final_corpus = []
 final_corpus_joined = []
 for i in df.index:
@@ -117,10 +121,10 @@ positive = data_eda[data_eda['Sentiment'] == 1]
 positive_list = positive['text'].tolist()
 
 # Storing negative data seperately
-
 negative = data_eda[data_eda['Sentiment'] == 0]
 negative_list = negative['text'].tolist()
 
+# Creating a single string containing all words
 positive_all = " ".join([word for sent in positive_list for word in sent ])
 negative_all = " ".join([word for sent in negative_list for word in sent ])
 
@@ -143,6 +147,7 @@ plt.show()
 # Negative data has words like hate,lone, sad, tired, suck ,sorry etc
 # Some of the words are still common in both such as Lol, quot, work ,today etc
 
+# Gets the number of occurences of all words in the dataframe
 def get_count(data):
     dic = {}
     for i in data:
@@ -151,19 +156,19 @@ def get_count(data):
                 dic[j]=1
             else:
                 dic[j]+=1    
-            
     return(dic)
 count_corpus = get_count(positive_list)
 count_corpus = pd.DataFrame({"word":count_corpus.keys(),"count":count_corpus.values()})
 count_corpus = count_corpus.sort_values(by = "count", ascending = False)
 
+# Plots a histogram  showing how many times each word appears in the corpus(positive)
 import seaborn as sns
 plt.figure(figsize = (10,5))
 sns.barplot(x = count_corpus["word"][:20], y = count_corpus["count"][:20])
 plt.title('one words in positive data')
-# plt.show()
+plt.show()
 
-
+# Plots a histogram  showing how many times each word appears in the corpus(negative)
 count_corpus = get_count(negative_list)
 count_corpus = pd.DataFrame({"word":count_corpus.keys(),"count":count_corpus.values()})
 count_corpus = count_corpus.sort_values(by = "count", ascending = False)
@@ -171,7 +176,7 @@ import seaborn as sns
 plt.figure(figsize = (10,5))
 sns.barplot(x = count_corpus["word"][:20], y = count_corpus["count"][:20])
 plt.title('one words in negative data')
-# plt.show()
+plt.show()
 
 # 4. Text Vectorization 
 tfidf = TfidfVectorizer()
@@ -184,7 +189,24 @@ X_train, X_test, y_train, y_test = train_test_split(vector,
                                                     random_state=42,
                                                     stratify = y)
 
+#Evaluate and display performance metrics for a machine learning model.
 def metrics(y_train,y_train_pred,y_test,y_test_pred):
+    '''
+    Evaluate and display performance metrics for a machine learning model.
+
+    Parameters:
+    y_train (array-like): True labels of the training dataset.
+    y_train_pred (array-like): Predicted labels of the training dataset.
+    y_test (array-like): True labels of the testing dataset.
+    y_test_pred (array-like): Predicted labels of the testing dataset.
+
+    This function calculates and prints the accuracy of the model on both the 
+    training and testing datasets. It also displays a normalized confusion matrix 
+    and a classification report for both datasets, providing a detailed view of the
+    model's performance in terms of precision, recall, and F1-score for each class.
+
+    The function does not return any value; it only prints and displays the metrics.
+    '''
     # Training Results
     print("training accuracy = ",round(accuracy_score(y_train,y_train_pred),2)*100)
     ConfusionMatrixDisplay.from_predictions(y_train,y_train_pred,normalize = 'all')
